@@ -30,7 +30,7 @@ if jq '.commits[].message, .head_commit.message' < $EVENT_PATH | grep -i -q "$*"
     if [[ "${LOCAL_TEST}" == *"true"* ]]; then
         echo "## [TESTING] Keyword was found but no release was created."
     else
-        curl -H "Authorization: token $GITHUB_TOKEN" -d "$DATA" $URL | jq .
+        curl -H "Authorization: token $ACCESS_TOKEN" -d "$DATA" $URL | jq .
     fi
 # otherwise
 else
