@@ -19,9 +19,11 @@ if jq '.commits[].message, .head_commit.message' < $EVENT_PATH | grep -i -q "$*"
     # do something
     VERSION=$(date +%F.%s)
 
-    DATA="$(printf '{"tag_name":"v%s",' $VERSION)"
-    DATA="${DATA} $(printf '"target_commitish":"master",')"
-    DATA="${DATA} $(printf '"name":"v%s",' $VERSION)"
+    TAG_NAME="$VERSION" # Example of setting tag_name based on the current date and time.
+
+    DATA="$(printf '{"tag_name":"%s",' "$TAG_NAME")"
+    DATA="${DATA} $(printf '"target_commitish":"%s",' "${YOUR_BRANCH_NAME}")"
+    DATA="${DATA} $(printf '"name":"%s",' "$TAG_NAME")"
     DATA="${DATA} $(printf '"body":"Automated release based on keyword: %s",' "$*")"
     DATA="${DATA} $(printf '"draft":false, "prerelease":false}')"
 
